@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPIO Raspberry</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>LED GPIO 27</h2>
+<button onclick="setLed(1)">Allumer</button>
+<button onclick="setLed(0)">Éteindre</button>
+
+<h2>Bouton GPIO 4</h2>
+<p>État : <span id="btn">?</span></p>
+
+<script>
+const API = "http://RASPBERRY_IP:3000";
+
+function setLed(value) {
+  fetch(API + "/led", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ value })
+  });
+}
+
+function readButton() {
+  fetch(API + "/button")
+    .then(r => r.json())
+    .then(d => {
+      document.getElementById("btn").textContent =
+        d.value ? "APPUIYÉ" : "RELÂCHÉ";
+    });
+}
+
+// Lecture toutes les 500 ms
+setInterval(readButton, 500);
+</script>
+
+</body>
+</html>
