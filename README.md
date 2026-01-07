@@ -22,3 +22,11 @@ curl -X POST http://RASPBERRY_IP:3000/led \
 
 Test bouton
 curl http://RASPBERRY_IP:3000/button
+
+*****************Ajout authorisation avec un TOKEN*********************
+
+Test:
+curl http://RASPBERRY_IP:3000/button \
+  -H "Authorization: Bearer CHANGE_MOI_TOKEN_ULTRA_SECRET"
+
+  
